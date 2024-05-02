@@ -21,6 +21,12 @@ describe('Gilded Rose', () => {
   });
 
   // Backstage item
+  it('should increase quality of backstage passes by 1 when sell date greater than 10', () => {
+    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 11, 0)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(1);
+  });
+
   it('should increase quality of backstage passes by 2 when sell date lower or equals to 10 and greater than 5', () => {
     const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 10, 0)]);
     const items = gildedRose.updateQuality();
@@ -63,5 +69,17 @@ describe('Gilded Rose', () => {
     const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 5, 80)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(80);
+  });
+
+  it('should decrease quality of conjured items by 2 when sell date is not passed', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 5, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(8);
+  });
+
+  it('should decrease quality of conjured items by 4 when sell date is passed', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 0, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(6);
   });
 });
